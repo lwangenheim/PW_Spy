@@ -4,7 +4,7 @@ import sys
 import operator
 from collections import Counter
 
-#repeated hashes (from full hashlist)
+#repeated hashes (from full hashlist . )
 repeat = []
 #plaintext passwords (from potfile)
 plaintext_passwords = []
