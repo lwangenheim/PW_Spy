@@ -4,14 +4,19 @@ import sys
 import operator
 from collections import Counter
 
+#repeated hashes (from full hashlist)
 repeat = []
+#plaintext passwords (from potfile)
 plaintext_passwords = []
+#cracked hashes (from potfile)
 cracked_hashes = []
 
 
 if len(sys.argv) < 3:
 	print("Usage is: <full hashlist> <potfile>")
 	sys.exit()
+
+#split out the potfile to get hashes and plaintext passwords
 def split_pot():
   print('###################### Splitting Pot File ##################\n')
   with open(sys.argv[2]) as pot:
