@@ -6,8 +6,10 @@ from collections import Counter
 
 #repeated hashes (from full hashlist . )
 repeat = []
+
 #plaintext passwords (from potfile)
 plaintext_passwords = []
+
 #cracked hashes (from potfile)
 cracked_hashes = []
 
