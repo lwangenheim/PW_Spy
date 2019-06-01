@@ -12,7 +12,7 @@ It would be best to send this into an output file:
 
 If you don't want a specific piece of the analysis for some reason simply comment out the function call at the bottom of the file.
 
-This assumes you used Hashcat and your full hashlist is stripped with one hash per line. The potfile is a raw potfile from hashcat.
+This assumes you used Hashcat and your full hashlist is stripped with one hash per line. The potfile is a raw potfile from Hashcat.
 
 ## TODO
 I will be adding more pieces as I get to it, this is more for personal use at this point.
