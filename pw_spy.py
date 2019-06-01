@@ -5,8 +5,8 @@ import re
 import operator
 from collections import Counter
 
-#repeated hashes (from full hashlist . )
-repeat = []
+#repeated hashes (from full hashlist)
+repeated_hashes = []
 
 #plaintext passwords (from potfile)
 plaintext_passwords = []
@@ -16,6 +16,15 @@ cracked_hashes = []
 
 #letters
 letters_regex = re.compile('[^a-zA-Z]')
+
+#potfile
+potfile = open(sys.argv[2]) 
+
+#potfile raw
+potfile_raw = []
+
+#full hashlists
+full_hashlist = open(sys.argv[1])
 
 print("""\
   ____ __          __   _____
@@ -34,26 +43,27 @@ if len(sys.argv) < 3:
 
 #split out the potfile to get hashes and plaintext passwords
 def split_pot():
-  print('###################### Splitting Pot File ##################\n')
-  with open(sys.argv[2]) as pot:
-      for password in pot:
-          hash_string, pw_string = password.split(":")
-          cracked_hashes.append(hash_string)
-          plaintext_passwords.append(pw_string) 
-  
+  print('###################### SPLITTING POT FILE ##################\n')
+  for password in potfile:
+     potfile_raw.append(password.strip())
+     hash_string, pw_string = password.split(":")
+     cracked_hashes.append(hash_string)
+     plaintext_passwords.append(pw_string) 
+  print('...DONE')
 
 #Find how many times a password was reused
 def pw_reuse():
   print("\n\n\n###################### PASSWORD REUSE ######################\n")
-  with open(sys.argv[1]) as full:
-      for word in full:
-          repeat.append(word.strip())
-  repeated = Counter(repeat).most_common()
+  for word in full_hashlist:
+    repeated_hashes.append(word.strip())
+  repeated = Counter(repeated_hashes).most_common()
   print('\n#### THIS IS SEPARATED AS <hash>:<number of occurances>')
   for occurance in repeated:
       occurance = [x for x in occurance if x != 1]
       if len(occurance) != 1:
           print(*occurance, sep=":")
+
+
 
 #Thanks Joshua Platz for his maskbuilder.py
 def masks():
@@ -89,10 +99,10 @@ def masks():
 
 # Gets the basewords from the plaintext passwords and counts the number of occurances
 def basewords_getter():
-  print('\n\n\n###################### REPEATED BASEWORDS  #########################\n')
+  print('\n\n\n###################### COMMON BASEWORDS  #########################\n')
   sorted_pws = []
   for word in plaintext_passwords:
-    baseword = (letters_regex.sub('',word))
+    baseword = (letters_regex.sub('',word.rstrip()))
     sorted_pws.append(baseword)
   repeated = Counter(sorted_pws).most_common()
   print('\n###### THIS IS SEPARATED AS <baseword>:<number of occurances>#####')
@@ -101,7 +111,18 @@ def basewords_getter():
       if len(occurance) != 1:
           print(*occurance, sep=":")
 
-        
+# Looks for passwords without numbers or special characters
+def weak_passwords():
+  print("\n\n\n###################### WEAK PASSWORDS ######################\n")
+  weak_pws = []
+  for word in plaintext_passwords: 
+     baseword = (letters_regex.sub('',word.rstrip()))
+     if word.rstrip() == baseword:
+       weak_pws.append(baseword)
+  print('\n###### THESE ARE PASSWORDS THAT CONSIST OF ONLY LETTERS #####')
+  weak_pws.sort()
+  for occurance in weak_pws:
+    print(occurance)
 
 
 #Call the functions
@@ -109,3 +130,4 @@ split_pot()
 basewords_getter()
 pw_reuse()
 masks()
+weak_passwords()
