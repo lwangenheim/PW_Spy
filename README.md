@@ -1,4 +1,11 @@
-
+  ____ __          __   _____
+ |  __ \ \        / /  / ____|
+ | |__) \ \  /\  / /  | (___  _ __  _   _
+ |  ___/ \ \/  \/ /    \___ \| '_ \| | | |
+ | |      \  /\  /     ____) | |_) | |_| |
+ |_|       \/  \/     |_____/| .__/ \__, |
+                             | |     __/ |
+                             |_|    |___/
 # PW_Spy
 This is a tool to help with analysis after a full password audit. To use it simply call ```./pw_analysis.py``` and provide it with the list of hashes attempted and potfile from your engagement.
 So far it will strip out the basewords from the plaintext passwords in the potfile and count the occurances of those. It will also look for any re-used hashes in the list of hashes attempted. Finally it will create the most common password masks observed from the plaintext passwords to identify patterns in the passwords you were able to crack from the environment.
