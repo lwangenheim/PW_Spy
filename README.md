@@ -7,6 +7,7 @@ So far it will strip out the basewords from the plaintext passwords in the potfi
 
 ## Considerations
 It would be best to send this into an output file:
+
 ```./pw_analysis full_list_of_attempted_hashes.txt engagement_potfile.pot > analysis.txt```
 
 If you don't want a specific piece of the analysis for some reason simply comment out the function call at the bottom of the file.
