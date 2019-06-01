@@ -77,6 +77,7 @@ def masks():
         print(result)
 
 
+# Gets the basewords from the plaintext passwords and counts the number of occurances
 def basewords_getter():
   print('\n\n\n###################### REPEATED BASEWORDS  #########################\n')
   sorted_pws = []
