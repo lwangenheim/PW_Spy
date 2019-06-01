@@ -17,6 +17,16 @@ cracked_hashes = []
 #letters
 letters_regex = re.compile('[^a-zA-Z]')
 
+print("""\
+  ____ __          __   _____
+ |  __ \ \        / /  / ____|
+ | |__) \ \  /\  / /  | (___  _ __  _   _
+ |  ___/ \ \/  \/ /    \___ \| '_ \| | | |
+ | |      \  /\  /     ____) | |_) | |_| |
+ |_|       \/  \/     |_____/| .__/ \__, |
+                             | |     __/ |
+                             |_|    |___/
+                        """)
 
 if len(sys.argv) < 3:
 	print("Usage is: <full hashlist> <potfile>")
