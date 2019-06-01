@@ -26,5 +26,3 @@ This assumes you used Hashcat and your full hashlist is stripped with one hash p
 
 ## TODO
 1. I will be adding more pieces as I get to it, this is more for personal use at this point.
-2. Cooler, more hackery name
-3. Sweet ASCII art (after name is decided upon)
