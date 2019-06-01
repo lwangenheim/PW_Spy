@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import re
 import operator
 from collections import Counter
 
@@ -12,6 +13,9 @@ plaintext_passwords = []
 
 #cracked hashes (from potfile)
 cracked_hashes = []
+
+#letters
+letters_regex = re.compile('[^a-zA-Z]')
 
 
 if len(sys.argv) < 3:
@@ -35,15 +39,15 @@ def pw_reuse():
       for word in full:
           repeat.append(word.strip())
   repeated = Counter(repeat).most_common()
-  print("Hash                                  Occurances")
+  print('\n#### THIS IS SEPARATED AS <hash>:<number of occurances>')
   for occurance in repeated:
       occurance = [x for x in occurance if x != 1]
       if len(occurance) != 1:
-          print(*occurance, sep='      ')
+          print(*occurance, sep=":")
 
 #Thanks Joshua Platz for his maskbuilder.py
 def masks():
-  print('\n\n\n###################### PASSWORD Masks ######################\n')
+  print('\n\n\n###################### PASSWORD MASKS ######################\n')
   upper=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
   lower=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
   digit=["0","1","2","3","4","5","6","7","8","9"]
@@ -73,7 +77,24 @@ def masks():
         print(result)
 
 
+def basewords_getter():
+  print('\n\n\n###################### REPEATED BASEWORDS  #########################\n')
+  sorted_pws = []
+  for word in plaintext_passwords:
+    baseword = (letters_regex.sub('',word))
+    sorted_pws.append(baseword)
+  repeated = Counter(sorted_pws).most_common()
+  print('\n###### THIS IS SEPARATED AS <baseword>:<number of occurances>#####')
+  for occurance in repeated:
+      occurance = [x for x in occurance if x != 1]
+      if len(occurance) != 1:
+          print(*occurance, sep=":")
+
+        
+
+
 #Call the functions
 split_pot()
+basewords_getter()
 pw_reuse()
 masks()
