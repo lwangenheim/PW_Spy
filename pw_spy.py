@@ -124,10 +124,22 @@ def weak_passwords():
   for occurance in weak_pws:
     print(occurance)
 
+def pw_length_check():
+  print("\n\n\n################### PASSWORD LENGTH CHECK ################\n")
+  pw_length = []
+  for word in plaintext_passwords:
+     length = len(word)
+     pw_length.append(length)
+  pw_length.sort(reverse = True)
+
+  pw_count = Counter(pw_length)
+  for pw_length, count in pw_count.most_common():
+      print(pw_length, "->", count)  
 
 #Call the functions
 split_pot()
-basewords_getter()
-pw_reuse()
-masks()
-weak_passwords()
+#basewords_getter()
+#pw_reuse()
+#masks()
+#weak_passwords()
+pw_length_check()
