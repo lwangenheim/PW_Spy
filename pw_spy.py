@@ -134,7 +134,7 @@ def pw_length_check():
 
   pw_count = Counter(pw_length)
   for pw_length, count in pw_count.most_common():
-      print(pw_length, ",", count)  
+      print(pw_length, ", ", count)  
 
 #Call the functions
 split_pot()
