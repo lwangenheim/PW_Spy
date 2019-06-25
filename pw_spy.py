@@ -138,8 +138,8 @@ def pw_length_check():
 
 #Call the functions
 split_pot()
-#basewords_getter()
-#pw_reuse()
-#masks()
-#weak_passwords()
+basewords_getter()
+pw_reuse()
+masks()
+weak_passwords()
 pw_length_check()
