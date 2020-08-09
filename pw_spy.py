@@ -1,10 +1,18 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys
 import re
 import operator
+import argparse
 from collections import Counter
 
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-pot", "--potfile", dest = "potfile", help="Pot file")
+parser.add_argument("-hash", "--hashlist", dest = "hashlist", help="Hash List")
+
+args = parser.parse_args()
 #repeated hashes (from full hashlist)
 repeated_hashes = []
 
@@ -18,13 +26,15 @@ cracked_hashes = []
 letters_regex = re.compile('[^a-zA-Z]')
 
 #potfile
-potfile = open(sys.argv[2]) 
+potfile = open(args.potfile) 
 
 #potfile raw
 potfile_raw = []
 
 #full hashlists
-full_hashlist = open(sys.argv[1])
+if args.hashlist is not None:
+  full_hashlist = open(args.hashlist)
+
 
 print("""\
   ____ __          __   _____
@@ -46,23 +56,37 @@ def split_pot():
   print('###################### SPLITTING POT FILE ##################\n')
   for password in potfile:
      potfile_raw.append(password.strip())
-     hash_string, pw_string = password.split(":")
+     split_pw = password.split(":", 1)
+     hash_string, pw_string = split_pw
      cracked_hashes.append(hash_string)
      plaintext_passwords.append(pw_string) 
   print('...DONE')
 
 #Find how many times a password was reused
 def pw_reuse():
+  split_char = ":"
+  split = 3
   print("\n\n\n###################### PASSWORD REUSE ######################\n")
-  for word in full_hashlist:
-    repeated_hashes.append(word.strip())
-  repeated = Counter(repeated_hashes).most_common()
-  print('\n#### THIS IS SEPARATED AS <hash>:<number of occurances>')
-  for occurance in repeated:
-      occurance = [x for x in occurance if x != 1]
-      if len(occurance) != 1:
-          print(*occurance, sep=":")
-
+  if args.hashlist is not None:
+    for word in full_hashlist:
+      stripped_hash = word.strip()
+      ripped_hash   = stripped_hash.split(split_char)
+      fixed_hash    = split_char.join(ripped_hash[split:])
+      final_hash    = fixed_hash.split(":",1)
+      repeated_hashes.append(final_hash[0])
+    repeated = Counter(repeated_hashes).most_common()
+    reused = []
+    print('\n#### THIS IS SEPARATED AS <hash>:<number of occurances>')
+    for occurance in repeated:
+       occurance = [x for x in occurance if x != 1]
+       if len(occurance) != 1:
+           print(*occurance, sep=":")
+           reused.append(occurance)
+    if len(reused) == 0:
+      print("No repeated hashes!")
+  else:
+    print("No hashlist supplied, skipping")
+ 
 
 
 #Thanks Joshua Platz for his maskbuilder.py
